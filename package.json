@@ -1,0 +1,20 @@
+{
+  "name": "mtg-json",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bluebird": "^3.0.6",
+    "event-to-promise": "^0.6.0",
+    "request": "^2.67.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/TMiguelT/node-mtg-json"
+  }
+}
