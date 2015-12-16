@@ -1,6 +1,6 @@
 {
   "name": "mtg-json",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A module for interacting with the MtG JSON website, a site providing a series of JSON files that act as a database for Magic the Gathering Cards",
   "main": "index.js",
   "scripts": {
