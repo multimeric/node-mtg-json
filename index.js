@@ -17,19 +17,27 @@ const fileNameLookup = {
 /**
  * Returns a promise of an MtG Json file
  * @param type Either 'sets' or 'cards' - the type of file to download.
- * @param filename The location to put the new json file (including .json suffix)
- * @param opts An object with the keys {extras : bool, zip : bool}
+ * @param directory The location to put the new json file (the filename is decided by the request)
+ * @param opts An object with the keys {extras : bool, zip : bool, returnFile: bool}
  */
-function getMtgJson(type, filename, opts) {
+function getMtgJson(type, directory, opts) {
+
     //Setup input and output URIs
-    const url = getJsonUrl(type, opts);
-    const output = path.resolve(filename);
+    const outFileName = getJsonFilename(type, opts);
+    const url = `${BASE_URL}/${outFileName}`;
+    const output = path.resolve(`${directory}/${outFileName}`);
     const outputStream = fs.createWriteStream(output);
+    //Return a file path if they requested it, or it's a zip file
+    const returnFile = !!(opts && (opts.returnFile || opts.zip));
 
     //Return the json if it already exists
     try {
+        //If it's a ZIP, it can't be json, throw an error to ensure we don't try require
+        if (opts && opts.zip)
+            throw new Error();
+
         const json = require(output);
-        return Promise.resolve(json);
+        return returnFile ? Promise.resolve(output) : Promise.resolve(json);
     }
     catch (ex) {
         //Pipe the downloaded file into the output file
@@ -41,30 +49,32 @@ function getMtgJson(type, filename, opts) {
             .then(()=> {
                 //Return the new json file, parsed
                 try {
-                    return require(output);
+                    return returnFile ? Promise.resolve(output) : require(output);
                 }
-                catch(ex){
+                catch (ex) {
                     throw new Error(`Invalid json: ${ex.message}`);
                 }
             });
     }
 }
 
-function getJsonUrl(type, opts) {
+function getJsonFilename(type, opts) {
+    if (!type in fileNameLookup)
+        throw new Error('Invalid type parameter recieved! Must be either "sets" or "cards". See the readme for details.');
+
     let fileName = [
-        BASE_URL,
         fileNameLookup[type]
     ];
 
     if (opts && opts.extras)
         fileName.push('-x');
 
-    let suffix = ['.json'];
+    fileName.push('.json');
 
     if (opts && opts.zip)
-        suffix.push('.zip');
+        fileName.push('.zip');
 
-    return fileName.join('/') + suffix.join('');
+    return fileName.join('');
 }
 
 module.exports = getMtgJson;

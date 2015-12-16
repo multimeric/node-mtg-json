@@ -1,13 +1,16 @@
 {
   "name": "mtg-json",
   "version": "1.0.0",
-  "description": "",
+  "description": "A module for interacting with the MtG JSON website, a site providing a series of JSON files that act as a database for Magic the Gathering Cards",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha test.js"
   },
-  "author": "",
-  "license": "ISC",
+  "engines": {
+    "node": ">= 4.0.0"
+  },
+  "author": "TMiguelT",
+  "license": "MIT",
   "dependencies": {
     "bluebird": "^3.0.6",
     "event-to-promise": "^0.6.0",
@@ -16,5 +19,8 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/TMiguelT/node-mtg-json"
+  },
+  "devDependencies": {
+    "adm-zip": "^0.4.7"
   }
 }
