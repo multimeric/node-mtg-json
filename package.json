@@ -6,6 +6,12 @@
   "scripts": {
     "test": "mocha test.js"
   },
+  "keywords": [
+    "magic",
+    "gathering",
+    "mtg",
+    "json"
+  ],
   "engines": {
     "node": ">= 4.0.0"
   },
