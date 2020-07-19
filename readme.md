@@ -5,12 +5,13 @@
 This module is designed for interacting with the [MtG JSON website](http://mtgjson.com/), a site providing
 a series of JSON files that act as a database for Magic the Gathering Cards.
 
-You might be interested in this module if you're making any kind of node app involved with Magic the Gathering,
+You might be interested in this module if you're making any kind of Node app involved with Magic the Gathering,
 for example a database, simulator, etc.
 
 ## Compatibility
 
-This module uses some recent Node features, so requires node version 4.0 and greater.
+This module uses some recent Node features, so requires Node version 12.0 and greater. If you have an older version of
+Node, you may be able to use the `1.x` versions of this module, which are compatible with Node 4.0+
 
 ## Usage
 
@@ -19,33 +20,35 @@ This module uses some recent Node features, so requires node version 4.0 and gre
 - First install the module:
   `npm install mtg-json --save`
 
-- Then require the module and call it:
+- Then import the module and call it:
 
   ```javascript
-  //Require the module
-  const getMtgJson = require("mtg-json");
+  import { getMtgJson } from "mtg-json";
 
-  //Request AllCards.json and store it in the current directory
-  getMtgJson("cards", __dirname)
-    //Use the json data
-    .then((json) => {
-      let stormCrow = json["stormCrow"];
-      console.log(stormCrow.types); // Logs ['Creature']
-    });
+  // Request AllCards.json and store it in the current directory
+  const json = await getMtgJson({ type: "AtomicCards", dir: __dirname });
+  let stormCrow = json.data["Storm Crow"][0];
+  console.log(stormCrow.type);
   ```
+
+  Will return:
+
+  ```
+  Creature — Bird
+  ```
+
+  Note, this particular example will only work in Node 14+, using `--harmony-top-level-await`, but if you're not using
+  it in a top-level function, you can use Node 12+
 
 ### API
 
-The module consists of one function with the following signature: `getMtgJson(type, directory, opts)`
+The module consists of one function with the following signature: `getMtgJson({type, dir, version})`
 
-- `type` (string): Required. Either `'cards'` or `'sets'`, to determine if you want a file organized by card or by set. See the [MtG JSON website](http://mtgjson.com/) for details.
-
-- `directory` (string): Required. The directory in which to place or look for the JSON file. This may often be `__dirname`, the current directory constant, but you must set this yourself, `__dirname` is not the default.
-
-- `opts` (object): Options. An object with three optional keys:
-  _ `extras` (boolean): True if you want the file to include extras (rulings, printings, foreign language names etc.). Again, see the MtG JSON website for details.
-  _ `zip` (boolean): True if you want the file to be downloaded as a zip file. If this is true, the promise return value will be a filepath, and not JSON. \* `returnFile` (boolean): True if you want the promise to resolve with the json filename, rather than the JSON data itself. True by default if `zip` is true.
+- `type` (string): Required. The name of the MTGJSON file, e.g. "AllPrintings". See the [MtG JSON website](http://mtgjson.com/) for details.
+- `dir` (string): Required. The directory in which to place or look for the JSON file. This may often be `.`, the current directory constant, but you must set this yourself, `__dirname` is not the default.
+- `version` (string): Optional. The MTGJSON API version to query. Defaults to `v5`.
 
 ## Tests
 
-The module is quite comprehensively tested. Simply run `npm test` or `mocha test.js` twith Mocha globally installed to run the tests. Note that these can take a while (about a minute) because they actually involve downloading the large JSON files from the website a number of times.
+- Install the dev dependencies using `npm install`
+- Run `npm test` to run the tests. Note that these can take a while (about a minute) because they actually involve downloading the large JSON files from the website a number of times.

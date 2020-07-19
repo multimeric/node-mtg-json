@@ -4,7 +4,7 @@
   "description": "A module for interacting with the MtG JSON website, a site providing a series of JSON files that act as a database for Magic the Gathering Cards",
   "main": "index.js",
   "scripts": {
-    "test": "mocha test.mjs"
+    "test": "mocha test.js"
   },
   "keywords": [
     "magic",
@@ -12,6 +12,7 @@
     "mtg",
     "json"
   ],
+  "type": "module",
   "engines": {
     "node": ">= 10.0.0"
   },
