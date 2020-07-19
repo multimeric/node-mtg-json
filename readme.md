@@ -2,7 +2,7 @@
 
 ## Introduction
 
-This module is designed for interacting with the [MtG JSON website](http://mtgjson.com/), a site providing
+This module is designed for interacting with the [MTGJSON website](http://mtgjson.com/), a site providing
 a series of JSON files that act as a database for Magic the Gathering Cards.
 
 You might be interested in this module if you're making any kind of Node app involved with Magic the Gathering,
@@ -47,6 +47,16 @@ The module consists of one function with the following signature: `getMtgJson({t
 - `type` (string): Required. The name of the MTGJSON file, e.g. "AllPrintings". See the [MtG JSON website](http://mtgjson.com/) for details.
 - `dir` (string): Required. The directory in which to place or look for the JSON file. This may often be `.`, the current directory constant, but you must set this yourself, `__dirname` is not the default.
 - `version` (string): Optional. The MTGJSON API version to query. Defaults to `v5`.
+
+## Changelog
+
+### 2.0.0
+
+- Support MTGJSON API v5
+- Removed all external dependencies, making it a much lighter module to install
+- Rewritten using async/await for cleaner code
+- Add prettier linting
+- Add CI builds
 
 ## Tests
 
