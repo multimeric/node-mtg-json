@@ -4,7 +4,7 @@
   "description": "A module for interacting with the MtG JSON website, a site providing a series of JSON files that act as a database for Magic the Gathering Cards",
   "main": "index.js",
   "scripts": {
-    "test": "mocha test.js"
+    "test": "mocha test.mjs"
   },
   "keywords": [
     "magic",
@@ -13,20 +13,26 @@
     "json"
   ],
   "engines": {
-    "node": ">= 4.0.0"
+    "node": ">= 10.0.0"
   },
   "author": "TMiguelT",
   "license": "MIT",
-  "dependencies": {
-    "bluebird": "^3.0.6",
-    "event-to-promise": "^0.6.0",
-    "request": "^2.67.0"
-  },
   "repository": {
     "type": "git",
     "url": "https://github.com/TMiguelT/node-mtg-json"
   },
   "devDependencies": {
-    "adm-zip": "^0.4.7"
+    "husky": "^4.2.5",
+    "lint-staged": "^10.2.11",
+    "mocha": "^8.0.1",
+    "prettier": "^2.0.5"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.{js,css,md}": "prettier --write"
   }
 }
