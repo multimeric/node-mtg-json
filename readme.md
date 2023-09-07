@@ -23,7 +23,7 @@ Node, you may be able to use the `1.x` versions of this module, which are compat
 - Then import the module and call it:
 
   ```javascript
-  import { getMtgJson } from "mtg-json";
+  import getMtgJson from "mtg-json";
 
   // Request AllCards.json and store it in the current directory
   const json = await getMtgJson({ type: "AtomicCards", dir: __dirname });
